@@ -167,11 +167,6 @@ SmartStudy features a robust authentication system:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- Built with ❤️ using Spring Boot and modern web technologies
-- Special thanks to the open-source community for their valuable contributions
-
 ## 📧 Contact
 
 Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - your.email@example.com
@@ -348,49 +343,7 @@ curl -X POST http://localhost:8080/api/quiz/generate \
 - 1M characters per month
 - No credit card required
 
-## 🧪 Testing
 
-```bash
-# Run unit tests
-mvn test
-
-# Run integration tests
-mvn verify
-```
-
-## 📊 Database Schema
-
-### Documents Table
-```sql
-CREATE TABLE documents (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    filename VARCHAR(255) NOT NULL,
-    original_filename VARCHAR(255) NOT NULL,
-    file_size BIGINT,
-    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    file_type VARCHAR(50),
-    status ENUM('PROCESSING', 'COMPLETED', 'FAILED') DEFAULT 'PROCESSING',
-    file_path VARCHAR(500),
-    content_summary TEXT
-);
-```
-
-### Document Content Table
-```sql
-CREATE TABLE document_content (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    document_id BIGINT,
-    page_number INT,
-    slide_number INT,
-    content TEXT,
-    topic VARCHAR(255),
-    section_title VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    content_hash VARCHAR(255),
-    word_count INT,
-    FOREIGN KEY (document_id) REFERENCES documents(id)
-);
-```
 
 ## 🤝 Contributing
 
@@ -404,26 +357,18 @@ CREATE TABLE document_content (
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
 
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-repo/issues) page
-2. Create a new issue with detailed description
-3. Contact the development team
 
 ## 🔮 Roadmap
 
-- [ ] User authentication and authorization
 - [ ] Real-time document processing status
 - [ ] Advanced search filters
 - [ ] Export quiz results
 - [ ] Mobile application
 - [ ] Integration with learning management systems
-- [ ] Multi-language support
 - [ ] Advanced analytics and insights
 
 ---
 
-**Built with ❤️ for intelligent learning**
+
 
