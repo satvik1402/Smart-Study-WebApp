@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search & Explore - SmartStudy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class='bx bx-brain'></i>
+                <span>SmartStudy</span>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class='bx bx-home-alt'></i>Dashboard</a></li>
+            <li><a href="upload.html"><i class='bx bx-upload'></i>Upload Documents</a></li>
+            <li class="active"><a href="search.html"><i class='bx bx-search'></i>Search & Explore</a></li>
+            <li><a href="ai-assistant.html"><i class='bx bx-bot'></i>AI Assistant</a></li>
+            <li><a href="quiz.html"><i class='bx bx-help-circle'></i>Quiz Generator</a></li>
+            <li><a href="analytics.html"><i class='bx bx-bar-chart-alt-2'></i>Analytics</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="sidebar-toggle">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <h1>Search & Explore</h1>
+            </div>
+            <div class="nav-right">
+                <div id="nav-auth"></div>
+            </div>
+        </header>
+
+        <!-- Search Content -->
+        <div class="search-container">
+            <!-- Search Bar -->
+            <div class="search-section">
+                <div class="search-bar">
+                    <i class='bx bx-search'></i>
+                    <input type="text" id="searchInput" placeholder="Search your documents...">
+                    <button id="searchBtn" class="search-btn">
+                        <i class='bx bx-search'></i>
+                        Search
+                    </button>
+                </div>
+                
+                <!-- Advanced Filters -->
+                <div class="advanced-filters">
+                    <div class="filter-group">
+                        <label>Document Type:</label>
+                        <select id="fileTypeFilter">
+                            <option value="">All Types</option>
+                            <option value="pdf">PDF</option>
+                            <option value="doc">DOC</option>
+                            <option value="docx">DOCX</option>
+                            <option value="ppt">PPT</option>
+                            <option value="pptx">PPTX</option>
+                            <option value="txt">TXT</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Search Mode:</label>
+                        <select id="searchMode">
+                            <option value="find_keywords">Find keywords (content)</option>
+                            <option value="find_documents">Find documents (by name)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Date Range:</label>
+                        <select id="dateFilter">
+                            <option value="">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" id="clearFilters" class="btn btn-secondary" onclick="clearFilters()">
+                        <i class='bx bx-reset'></i>
+                        Clear Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h2>Search Results</h2>
+                    <div class="results-info">
+                        <span id="resultsCount">0 results found</span>
+                        <div class="sort-options">
+                            <label>Sort by:</label>
+                            <select id="sortBy">
+                                <option value="relevance">Relevance</option>
+                                <option value="date">Date</option>
+                                <option value="filename">Filename</option>
+                                <option value="size">File Size</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-container" id="resultsContainer">
+                    <!-- Results will be populated here -->
+                    <div class="no-results">
+                        <i class='bx bx-search-alt'></i>
+                        <h3>Start searching to explore your documents</h3>
+                        <p>Use the search bar above to find specific content, topics, or documents</p>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button class="page-btn" id="prevPage">
+                        <i class='bx bx-chevron-left'></i>
+                        Previous
+                    </button>
+                    <div class="page-numbers" id="pageNumbers"></div>
+                    <button class="page-btn" id="nextPage">
+                        Next
+                        <i class='bx bx-chevron-right'></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Suggestions -->
+            <div class="suggestions-section">
+                <h3>Popular Searches</h3>
+                <div class="suggestion-tags">
+                    <span class="suggestion-tag" data-query="database">database</span>
+                    <span class="suggestion-tag" data-query="clustering">clustering</span>
+                    <span class="suggestion-tag" data-query="SQL">SQL</span>
+                    <span class="suggestion-tag" data-query="normalization">normalization</span>
+                    <span class="suggestion-tag" data-query="indexing">indexing</span>
+                    <span class="suggestion-tag" data-query="transactions">transactions</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', ()=> Auth.renderNav());</script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
+

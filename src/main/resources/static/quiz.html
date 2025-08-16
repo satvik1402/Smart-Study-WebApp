@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Generator - SmartStudy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class='bx bx-brain'></i>
+                <span>SmartStudy</span>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class='bx bx-home-alt'></i>Dashboard</a></li>
+            <li><a href="upload.html"><i class='bx bx-upload'></i>Upload Documents</a></li>
+            <li><a href="search.html"><i class='bx bx-search'></i>Search & Explore</a></li>
+            <li><a href="ai-assistant.html"><i class='bx bx-bot'></i>AI Assistant</a></li>
+            <li class="active"><a href="quiz.html"><i class='bx bx-help-circle'></i>Quiz Generator</a></li>
+            <li><a href="analytics.html"><i class='bx bx-bar-chart-alt-2'></i>Analytics</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="sidebar-toggle">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <h1>Quiz Generator</h1>
+            </div>
+            <div class="nav-right">
+                <div id="nav-auth"></div>
+            </div>
+        </header>
+
+        <!-- Quiz Content -->
+        <div class="quiz-container">
+            <!-- Quiz Creation Section -->
+            <div class="quiz-creation" id="quizCreation">
+                <div class="creation-header">
+                    <h2>Create New Quiz</h2>
+                    <p>Generate custom quizzes from your study materials</p>
+                </div>
+
+                <div class="creation-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quizTitle">Quiz Title:</label>
+                            <input type="text" id="quizTitle" placeholder="e.g., Database Management Quiz">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quizTopic">Topic/Subject:</label>
+                            <input type="text" id="quizTopic" placeholder="e.g., SQL, Normalization, etc.">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="quizDocument">Select Document:</label>
+<button id="refreshDocuments" class="refresh-btn" type="button" aria-label="Refresh Documents" style="margin-left:8px;"><i class="bx bx-refresh"></i></button>
+<div id="quizNotification" role="alert" style="margin-bottom:8px;"></div>
+<select id="quizDocument" style="width:100%;margin-bottom:8px;">
+    <option value="">-- Select a document --</option>
+</select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="questionCount">Number of Questions:</label>
+                            <select id="questionCount">
+                                <option value="5">5 Questions</option>
+                                <option value="10" selected>10 Questions</option>
+                                <option value="15">15 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="25">25 Questions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="difficulty">Difficulty Level:</label>
+                            <select id="difficulty">
+                                <option value="easy">Easy</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="hard">Hard</option>
+                                <option value="mixed">Mixed</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="questionTypes">Question Types:</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="multiple_choice" checked>
+                                    <span>Multiple Choice</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" value="true_false">
+                                    <span>True/False</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="timeLimit">Time Limit (minutes):</label>
+                            <select id="timeLimit">
+                                <option value="0">No Time Limit</option>
+                                <option value="5">5 minutes</option>
+                                <option value="10" selected>10 minutes</option>
+                                <option value="15">15 minutes</option>
+                                <option value="20">20 minutes</option>
+                                <option value="30">30 minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="passingScore">Passing Score (%):</label>
+                            <select id="passingScore">
+                                <option value="60">60%</option>
+                                <option value="70" selected>70%</option>
+                                <option value="80">80%</option>
+                                <option value="90">90%</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button id="generateQuiz" class="primary-btn">
+                            <i class='bx bx-plus-circle'></i>
+                            Generate Quiz
+                        </button>
+                        <button id="previewQuiz" class="secondary-btn" disabled>
+                            <i class='bx bx-show'></i>
+                            Preview Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Taking Interface -->
+            <div class="quiz-taking" id="quizTaking" style="display: none;">
+                <div class="quiz-header">
+                    <div class="quiz-info">
+                        <h2 id="currentQuizTitle">Quiz Title</h2>
+                        <div class="quiz-meta">
+                            <span id="questionProgress">Question 1 of 10</span>
+                            <span id="timeRemaining">Time: 10:00</span>
+                        </div>
+                    </div>
+                    <div class="quiz-actions">
+                        <button id="exitQuiz" class="exit-btn">
+                            <i class='bx bx-x'></i>
+                            Exit Quiz
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <div class="question-container" id="questionContainer">
+                    <!-- Questions will be loaded here -->
+                </div>
+
+                <div class="quiz-navigation">
+                    <button id="prevQuestion" class="nav-btn" disabled>
+                        <i class='bx bx-chevron-left'></i>
+                        Previous
+                    </button>
+                    <button id="nextQuestion" class="nav-btn">
+                        Next
+                        <i class='bx bx-chevron-right'></i>
+                    </button>
+                    <button id="submitQuiz" class="submit-btn" style="display: none;">
+                        <i class='bx bx-check'></i>
+                        Submit Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Results -->
+            <div class="quiz-results" id="quizResults" style="display: none;">
+                <div class="results-header">
+                    <h2>Quiz Results</h2>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="finalScore">85%</span>
+                        </div>
+                        <div class="score-details">
+                            <p id="scoreText">Great job! You passed the quiz.</p>
+                            <p id="scoreDetails">15/20 questions correct</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-summary">
+                    <div class="summary-card">
+                        <h3>Performance Summary</h3>
+                        <div class="summary-stats">
+                            <div class="stat">
+                                <span class="stat-label">Correct Answers:</span>
+                                <span class="stat-value" id="correctAnswers">15</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Incorrect Answers:</span>
+                                <span class="stat-value" id="incorrectAnswers">5</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Time Taken:</span>
+                                <span class="stat-value" id="timeTaken">8:45</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Accuracy:</span>
+                                <span class="stat-value" id="accuracy">75%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-review" id="questionReview">
+                    <!-- Question review will be loaded here -->
+                </div>
+
+                <div class="results-actions">
+                    <button id="retakeQuiz" class="primary-btn">
+                        <i class='bx bx-refresh'></i>
+                        Retake Quiz
+                    </button>
+                    <button id="newQuiz" class="secondary-btn">
+                        <i class='bx bx-plus'></i>
+                        Create New Quiz
+                    </button>
+                    <button id="downloadResults" class="secondary-btn">
+                        <i class='bx bx-download'></i>
+                        Download Results
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Quizzes -->
+            <div class="recent-quizzes">
+                <h3>Recent Quizzes</h3>
+                <div class="quizzes-grid" id="quizzesGrid">
+                    <!-- Recent quizzes will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', ()=> Auth.renderNav());</script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>
+

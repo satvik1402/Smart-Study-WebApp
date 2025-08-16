@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartStudy - Intelligent Learning Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="bx bx-brain"></i>
+                <span>SmartStudy</span>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="active"><a href="index.html"><i class='bx bx-home-alt'></i>Dashboard</a></li>
+            <li><a href="upload.html"><i class='bx bx-upload'></i>Upload Documents</a></li>
+            <li><a href="search.html"><i class='bx bx-search'></i>Search & Explore</a></li>
+            <li><a href="ai-assistant.html"><i class='bx bx-bot'></i>AI Assistant</a></li>
+            <li><a href="quiz.html"><i class='bx bx-help-circle'></i>Quiz Generator</a></li>
+            <li><a href="analytics.html"><i class='bx bx-bar-chart-alt-2'></i>Analytics</a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="user-details">
+                    <h4>Student</h4>
+                    <p>Learning Mode</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="bx bx-menu"></i>
+                </button>
+                <h1>Dashboard</h1>
+            </div>
+            <div class="nav-right">
+                <div id="nav-auth"></div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h2>Welcome back! 👋</h2>
+                    <p>Ready to continue your learning journey? Upload documents, ask questions, or generate quizzes to enhance your study experience.</p>
+                </div>
+                <div class="welcome-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='upload.html'">
+                        <i class="bx bx-upload"></i>
+                        Upload Documents
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='ai-assistant.html'">
+                        <i class="bx bx-bot"></i>
+                        Ask AI Assistant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bx bx-file"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalDocuments">0</h3>
+                        <p>Total Documents</p>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="bx bx-up-arrow-alt"></i>
+                        <span>+12%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bx bx-book-content"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalPages">0</h3>
+                        <p>Pages Analyzed</p>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="bx bx-up-arrow-alt"></i>
+                        <span>+8%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bx bx-question-mark"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalQuizzes">0</h3>
+                        <p>Quizzes Generated</p>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="bx bx-up-arrow-alt"></i>
+                        <span>+15%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bx bx-time"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="studyTime">0h</h3>
+                        <p>Study Time</p>
+                    </div>
+                    <div class="stat-trend positive">
+                        <i class="bx bx-up-arrow-alt"></i>
+                        <span>+5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="window.location.href='upload.html'">
+                        <div class="action-icon">
+                            <i class="bx bx-upload"></i>
+                        </div>
+                        <h4>Upload Documents</h4>
+                        <p>Add new study materials to your library</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='search.html'">
+                        <div class="action-icon">
+                            <i class="bx bx-search"></i>
+                        </div>
+                        <h4>Search Content</h4>
+                        <p>Find specific information across all documents</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='ai-assistant.html'">
+                        <div class="action-icon">
+                            <i class="bx bx-bot"></i>
+                        </div>
+                        <h4>AI Assistant</h4>
+                        <p>Get answers and explanations from AI</p>
+                    </div>
+
+                    <div class="action-card" onclick="window.location.href='quiz.html'">
+                        <div class="action-icon">
+                            <i class="bx bx-question-mark"></i>
+                        </div>
+                        <h4>Generate Quiz</h4>
+                        <p>Create practice questions from your documents</p>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <div class="section-header">
+                    <h3>Recent Activity</h3>
+                    <a href="upload.html" class="view-all">View All</a>
+                </div>
+                <div class="activity-list" id="recentActivity">
+                    <!-- Activity items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Study Progress -->
+            <div class="study-progress">
+                <div class="section-header">
+                    <h3>Study Progress</h3>
+                    <span class="progress-date">This Week</span>
+                </div>
+                <div class="progress-cards">
+                    <div class="progress-card">
+                        <div class="progress-info">
+                            <h4>Documents Read</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <span class="progress-text">3 of 4 documents</span>
+                        </div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-info">
+                            <h4>Quizzes Completed</h4>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span class="progress-text">6 of 10 quizzes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', ()=> Auth.renderNav());</script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
+

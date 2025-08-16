@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - SmartStudy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class='bx bx-brain'></i>
+                <span>SmartStudy</span>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class='bx bx-home-alt'></i>Dashboard</a></li>
+            <li><a href="upload.html"><i class='bx bx-upload'></i>Upload Documents</a></li>
+            <li><a href="search.html"><i class='bx bx-search'></i>Search & Explore</a></li>
+            <li><a href="ai-assistant.html"><i class='bx bx-bot'></i>AI Assistant</a></li>
+            <li><a href="quiz.html"><i class='bx bx-help-circle'></i>Quiz Generator</a></li>
+            <li class="active"><a href="analytics.html"><i class='bx bx-bar-chart-alt-2'></i>Analytics</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <button class="sidebar-toggle">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <h1>Analytics</h1>
+            </div>
+            <div class="nav-right">
+                <div id="nav-auth"></div>
+            </div>
+        </header>
+
+        <!-- Analytics Content -->
+        <div class="analytics-container">
+            <!-- Overview Cards -->
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class='bx bx-file'></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalDocs">0</h3>
+                        <p>Total Documents</p>
+                        <span class="trend positive">
+                            <i class='bx bx-trending-up'></i>
+                            +12% this week
+                        </span>
+                    </div>
+                    <div class="loading-placeholder">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+                
+                
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class='bx bx-search'></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalSearches">0</h3>
+                        <p>Total Searches</p>
+                        <span class="trend positive">
+                            <i class='bx bx-trending-up'></i>
+                            +8% this week
+                        </span>
+                    </div>
+                    <div class="loading-placeholder">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class='bx bx-help-circle'></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalQuizzes">0</h3>
+                        <p>Quizzes Taken</p>
+                        <span class="trend positive">
+                            <i class='bx bx-trending-up'></i>
+                            +15% this week
+                        </span>
+                    </div>
+                    <div class="loading-placeholder">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <div class="card-icon">
+                        <i class='bx bx-bot'></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="aiInteractions">0</h3>
+                        <p>AI Interactions</p>
+                        <span class="trend positive">
+                            <i class='bx bx-trending-up'></i>
+                            +20% this week
+                        </span>
+                    </div>
+                    <div class="loading-placeholder">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <!-- Activity Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Study Activity</h3>
+                        <div class="chart-controls">
+                            <select id="activityPeriod">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30">Last 30 Days</option>
+                                <option value="90">Last 3 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="activityChart"></canvas>
+                        <div class="loading-placeholder">
+                            <div class="loading-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Types Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Document Types</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-type="pie">Pie</button>
+                            <button class="chart-btn" data-type="doughnut">Doughnut</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="documentTypesChart"></canvas>
+                        <div class="loading-placeholder">
+                            <div class="loading-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="metrics-section">
+                <div class="metrics-header">
+                    <h3>Performance Metrics</h3>
+                    <div class="metrics-filter">
+                        <select id="metricsPeriod">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="quarter">This Quarter</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="metrics-grid metrics-container">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Search Accuracy</h4>
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="metric-value">
+                            <span id="searchAccuracy">85%</span>
+                        </div>
+                        <div class="metric-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <p class="metric-description">Percentage of relevant search results</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Quiz Performance</h4>
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="metric-value">
+                            <span id="quizPerformance">78%</span>
+                        </div>
+                        <div class="metric-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <p class="metric-description">Average quiz score</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>AI Response Quality</h4>
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="metric-value">
+                            <span id="aiQuality">92%</span>
+                        </div>
+                        <div class="metric-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <p class="metric-description">User satisfaction with AI responses</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h4>Study Time</h4>
+                            <i class='bx bx-info-circle'></i>
+                        </div>
+                        <div class="metric-value">
+                            <span id="studyTime">12.5h</span>
+                        </div>
+                        <div class="metric-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <p class="metric-description">Total time spent studying</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-section">
+                <div class="activity-header">
+                    <h3>Recent Activity</h3>
+                    <button class="view-all-btn">View All</button>
+                </div>
+
+                <div class="activity-list" id="activityList">
+                    <!-- Activity items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Study Insights -->
+            <div class="insights-section">
+                <div class="insights-header">
+                    <h3>Study Insights</h3>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class='bx bx-target-lock'></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Top Study Topics</h4>
+                            <ul class="insight-list">
+                                <li>Database Management (45%)</li>
+                                <li>SQL Queries (32%)</li>
+                                <li>Data Normalization (23%)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class='bx bx-time'></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Peak Study Hours</h4>
+                            <ul class="insight-list">
+                                <li>Morning: 9:00 AM - 11:00 AM</li>
+                                <li>Afternoon: 2:00 PM - 4:00 PM</li>
+                                <li>Evening: 7:00 PM - 9:00 PM</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class='bx bx-trending-up'></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Improvement Areas</h4>
+                            <ul class="insight-list">
+                                <li>Advanced SQL concepts</li>
+                                <li>Database design principles</li>
+                                <li>Performance optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="insight-card">
+                        <div class="insight-icon">
+                            <i class='bx bx-award'></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Achievements</h4>
+                            <ul class="insight-list">
+                                <li>Completed 10 quizzes</li>
+                                <li>Uploaded 5 documents</li>
+                                <li>Used AI assistant 25 times</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Section -->
+            <div class="export-section">
+                <div class="export-header">
+                    <h3>Export Analytics</h3>
+                    <p>Download your study analytics and progress reports</p>
+                </div>
+
+                <div class="export-options">
+                    <div class="export-card">
+                        <div class="export-icon">
+                            <i class='bx bx-file-pdf'></i>
+                        </div>
+                        <div class="export-content">
+                            <h4>PDF Report</h4>
+                            <p>Comprehensive analytics report in PDF format</p>
+                            <button class="export-btn" id="exportPDF">
+                                <i class='bx bx-download'></i>
+                                Download PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon">
+                            <i class='bx bx-spreadsheet'></i>
+                        </div>
+                        <div class="export-content">
+                            <h4>Excel Report</h4>
+                            <p>Detailed data in Excel spreadsheet format</p>
+                            <button class="export-btn" id="exportExcel">
+                                <i class='bx bx-download'></i>
+                                Download Excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="export-card">
+                        <div class="export-icon">
+                            <i class='bx bx-chart'></i>
+                        </div>
+                        <div class="export-content">
+                            <h4>Chart Data</h4>
+                            <p>Raw data for creating custom visualizations</p>
+                            <button class="export-btn" id="exportJSON">
+                                <i class='bx bx-download'></i>
+                                Download JSON
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', ()=> Auth.renderNav());</script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+</html>
+
