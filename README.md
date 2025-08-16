@@ -1,4 +1,4 @@
-<img width="1876" height="946" alt="image" src="https://github.com/user-attachments/assets/7b3602d0-3ac2-483d-aae8-55facbd130fa" /><img width="1919" height="975" alt="image" src="https://github.com/user-attachments/assets/ba7c0cef-4e34-444c-9391-b636405fc7dc" /># SmartStudy - AI-Powered Learning Assistant
+# SmartStudy - AI-Powered Learning Assistant
 
 SmartStudy is an intelligent learning platform that helps students study more effectively using AI. It allows users to upload study materials, generate quizzes, search content, and get AI-powered assistance.
 
