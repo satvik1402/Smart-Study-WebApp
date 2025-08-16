@@ -1,4 +1,4 @@
-# SmartStudy - AI-Powered Learning Assistant
+<img width="1876" height="946" alt="image" src="https://github.com/user-attachments/assets/7b3602d0-3ac2-483d-aae8-55facbd130fa" /><img width="1919" height="975" alt="image" src="https://github.com/user-attachments/assets/ba7c0cef-4e34-444c-9391-b636405fc7dc" /># SmartStudy - AI-Powered Learning Assistant
 
 SmartStudy is an intelligent learning platform that helps students study more effectively using AI. It allows users to upload study materials, generate quizzes, search content, and get AI-powered assistance.
 
@@ -302,34 +302,7 @@ smart-study-app/
 
 ## 🎯 Usage Examples
 
-### Upload Documents
-```bash
-curl -X POST http://localhost:8080/api/documents/upload \
-  -F "file=@study_materials.zip"
-```
 
-### Search Documents
-```bash
-curl -X POST http://localhost:8080/api/search \
-  -H "Content-Type: application/json" \
-  -d '{
-    "query": "What is cellular respiration?",
-    "includeSummarization": true,
-    "maxResults": 10
-  }'
-```
-
-### Generate Quiz
-```bash
-curl -X POST http://localhost:8080/api/quiz/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "documentIds": [1, 2, 3],
-    "questionCount": 10,
-    "difficulty": "MEDIUM",
-    "questionTypes": ["MCQ", "TRUE_FALSE"]
-  }'
-```
 
 ## 🔑 Getting Gemini API Key
 
@@ -343,15 +316,6 @@ curl -X POST http://localhost:8080/api/quiz/generate \
 - 1M characters per month
 - No credit card required
 
-
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## 📝 License
 
@@ -369,6 +333,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Advanced analytics and insights
 
 ---
+## Images
+
+<img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/c80bde1d-f76d-455b-afd9-19ce28651bc4" />
+<img width="1919" height="975" alt="image" src="https://github.com/user-attachments/assets/21d58151-5341-4f70-a35d-e795d760e2c8" />
+<img width="1919" height="971" alt="image" src="https://github.com/user-attachments/assets/54007e16-4d21-4131-9b71-6c420486aa84" />
+<img width="1919" height="968" alt="image" src="https://github.com/user-attachments/assets/838f8950-b44f-478a-a5d3-a8e59feb3ffa" />
+<img width="1912" height="971" alt="image" src="https://github.com/user-attachments/assets/983a07a6-05a2-4744-8808-5061f3f159a9" />
+<img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/5d940de3-e913-4d93-b445-41dec04f2396" />
+<img width="1917" height="972" alt="image" src="https://github.com/user-attachments/assets/04160248-3c93-4392-8826-b6eb08e76eb2" />
+<img width="1876" height="946" alt="image" src="https://github.com/user-attachments/assets/2ed8a578-abf2-4b47-bbc1-f5911029051c" />
+<img width="1917" height="966" alt="image" src="https://github.com/user-attachments/assets/517c128c-20e2-4845-bc97-7fbc503d6a03" />
+
+
+
+
+
+
+
 
 
 
