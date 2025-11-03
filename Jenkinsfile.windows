@@ -15,7 +15,7 @@ pipeline {
       post {
         success {
           archiveArtifacts artifacts: 'target\\smart-study-app-*.jar', fingerprint: true
-          junit '**\\target\\surefire-reports\\*.xml'
+          junit allowEmptyResults: true, testResults: '**\\target\\surefire-reports\\*.xml'
         }
       }
     }
