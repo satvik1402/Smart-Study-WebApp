@@ -39,6 +39,7 @@ pipeline {
           "DB_PASS=${DB_PASS}"
         ]) {
           bat '''
+          """
           if not exist "%APP_DIR%" mkdir "%APP_DIR%"
           copy /Y target\smart-study-app-1.0.0.jar "%APP_DIR%\app.jar"
 
@@ -48,16 +49,16 @@ pipeline {
 
           rem Start new app in background (detached PowerShell)
           start "SmartStudy" powershell -NoProfile -WindowStyle Hidden -Command ^
-            "& 'java' -jar '%APP_DIR%\app.jar' ^
+            "java -jar %APP_DIR%\app.jar ^
               --server.port=8080 ^
-              --lucene.index.directory='%APP_DIR%\lucene-index' ^
-              --spring.datasource.url='jdbc:mysql://localhost:3306/smartstudy?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true' ^
-              --spring.datasource.username='%DB_USER%' ^
-              --spring.datasource.password='%DB_PASS%' ^
-              --gemini.api.url='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent' ^
-              --gemini.api.key='%GEMINI_API_KEY%'  ^
-            > '%APP_DIR%\smartstudy.out.log' 2>&1"
-          '''
+              --lucene.index.directory=%APP_DIR%\lucene-index ^
+              --spring.datasource.url=jdbc:mysql://localhost:3306/smartstudy?useSSL=false^&serverTimezone=UTC^&allowPublicKeyRetrieval=true ^
+              --spring.datasource.username=%DB_USER% ^
+              --spring.datasource.password=%DB_PASS% ^
+              --gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent ^
+              --gemini.api.key=%GEMINI_API_KEY% ^
+            > %APP_DIR%\smartstudy.out.log 2^>^&1"
+          """
         }
       }
     }
