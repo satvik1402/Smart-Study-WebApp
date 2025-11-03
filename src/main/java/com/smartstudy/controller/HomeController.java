@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     
     /**
-     * Redirect root to test page
+     * Redirect root to index page
      */
     @GetMapping("/")
     public String home() {
-        return "redirect:/test.html";
+        return "redirect:/index.html";
     }
     
     /**
-     * Redirect /api to test page
+     * Redirect /api to index page
      */
     @GetMapping("/api")
     public String apiHome() {
-        return "redirect:/test.html";
+        return "redirect:/index.html";
     }
 }
 

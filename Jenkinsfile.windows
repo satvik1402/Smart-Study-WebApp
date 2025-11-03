@@ -1,0 +1,77 @@
+pipeline {
+  agent any
+
+  tools { jdk 'jdk17'; maven 'maven3' }
+
+  options { timestamps(); skipDefaultCheckout(true) }
+
+  stages {
+    stage('Checkout') { steps { checkout scm } }
+
+    stage('Build & Test') {
+      steps {
+        bat 'mvn -B -DskipTests=false clean package'
+      }
+      post {
+        success {
+          archiveArtifacts artifacts: 'target\\smart-study-app-*.jar', fingerprint: true
+          junit '**\\target\\surefire-reports\\*.xml'
+        }
+      }
+    }
+
+    stage('SonarQube (optional)') {
+      when { expression { return false } } // set to true when Sonar is configured
+      environment { SCANNER_HOME = tool 'SonarScanner' }
+      steps {
+        withSonarQubeEnv('sonar') {
+          bat '"%SCANNER_HOME%\\bin\\sonar-scanner.bat" -Dsonar.projectKey=smartstudy -Dsonar.sources=src/main/java -Dsonar.java.binaries=target/classes'
+        }
+      }
+    }
+
+    stage('Deploy (Local Windows, background)') {
+      environment { APP_DIR = 'C:\\smartstudy' }
+      steps {
+        withEnv([
+          "GEMINI_API_KEY=${GEMINI_API_KEY}",
+          "DB_USER=${DB_USER}",
+          "DB_PASS=${DB_PASS}"
+        ]) {
+          bat '''
+          if not exist "%APP_DIR%" mkdir "%APP_DIR%"
+          copy /Y target\smart-study-app-1.0.0.jar "%APP_DIR%\app.jar"
+
+          rem Kill any previous java process running our app (best-effort)
+          for /f "tokens=2" %%p in ('powershell -NoProfile -Command "Get-Process java -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*app.jar*' } | Select-Object -Expand Id"') do taskkill /PID %%p /F
+          timeout /t 2 >NUL
+
+          rem Start new app in background (detached PowerShell)
+          start "SmartStudy" powershell -NoProfile -WindowStyle Hidden -Command ^
+            "& 'java' -jar '%APP_DIR%\app.jar' ^
+              --server.port=8080 ^
+              --lucene.index.directory='%APP_DIR%\lucene-index' ^
+              --spring.datasource.url='jdbc:mysql://localhost:3306/smartstudy?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true' ^
+              --spring.datasource.username='%DB_USER%' ^
+              --spring.datasource.password='%DB_PASS%' ^
+              --gemini.api.url='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent' ^
+              --gemini.api.key='%GEMINI_API_KEY%'  ^
+            > '%APP_DIR%\smartstudy.out.log' 2>&1"
+          '''
+        }
+      }
+    }
+
+    stage('Smoke Test') {
+      steps {
+        bat 'powershell -NoProfile -Command "Invoke-WebRequest -UseBasicParsing http://localhost:8080/api/documents/health -TimeoutSec 30"'
+      }
+    }
+  }
+
+  environment {
+    GEMINI_API_KEY = credentials('gemini_api_key')
+    DB_USER        = credentials('db_user')
+    DB_PASS        = credentials('db_pass')
+  }
+}

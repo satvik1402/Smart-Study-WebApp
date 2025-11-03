@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile - SmartStudy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">SmartStudy</a>
+    <div id="nav-auth"></div>
+  </nav>
+
+  <main class="container">
+    <h1>Your Profile</h1>
+    <div id="profile"></div>
+  </main>
+
+  <script src="/js/auth.js"></script>
+  <script>
+    (async function(){
+      const user = await Auth.getCurrentUser();
+      if(!user){
+        window.location.href = "/login.html";
+        return;
+      }
+      Auth.renderNav();
+      const el = document.getElementById('profile');
+      el.innerHTML = `
+        <div class="card" style="max-width:600px">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <img src="${user.photoUrl || ''}" alt="avatar" width="96" height="96" style="border-radius:50%;object-fit:cover;background:#eee"/>
+            <div>
+              <div><strong>ID:</strong> ${user.id}</div>
+              <div><strong>Name:</strong> ${user.name}</div>
+              <div><strong>Username:</strong> ${user.username}</div>
+            </div>
+          </div>
+          <p style="margin-top:12px;color:#888">Photo is read-only here.</p>
+        </div>
+      `;
+    })();
+  </script>
+</body>
+</html>

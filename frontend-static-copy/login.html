@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - SmartStudy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="brand">SmartStudy</a>
+    <div id="nav-auth"></div>
+  </nav>
+
+  <main class="container">
+    <h1>Login</h1>
+    <form id="login-form" class="card" style="max-width:420px">
+      <label>Username<br/>
+        <input type="text" id="username" required />
+      </label>
+      <label>Password<br/>
+        <input type="password" id="password" required />
+      </label>
+      <button type="submit">Login</button>
+    </form>
+
+    <h2 style="margin-top:24px">Register</h2>
+    <form id="register-form" class="card" style="max-width:420px">
+      <label>Username<br/>
+        <input type="text" id="r-username" required />
+      </label>
+      <label>Password<br/>
+        <input type="password" id="r-password" required />
+      </label>
+      <label>Name<br/>
+        <input type="text" id="r-name" />
+      </label>
+      <button type="submit">Create Account</button>
+    </form>
+  </main>
+
+  <script src="/js/auth.js"></script>
+  <script>
+    Auth.renderNav();
+
+    document.getElementById('login-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const res = await fetch('/api/auth/login', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username,password}), credentials:'include'
+      });
+      if(res.ok){ window.location.href = '/profile.html'; }
+      else { alert('Login failed'); }
+    });
+
+    document.getElementById('register-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const username = document.getElementById('r-username').value.trim();
+      const password = document.getElementById('r-password').value;
+      const name = document.getElementById('r-name').value.trim() || username;
+      const res = await fetch('/api/auth/register', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username,password,name}), credentials:'include'
+      });
+      if(res.ok){ alert('Registered! Now login.'); }
+      else { alert('Register failed'); }
+    });
+  </script>
+</body>
+</html>
