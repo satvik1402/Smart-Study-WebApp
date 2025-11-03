@@ -39,16 +39,15 @@ pipeline {
           "DB_PASS=${DB_PASS}"
         ]) {
           bat '''
-          """
           if not exist "%APP_DIR%" mkdir "%APP_DIR%"
           copy /Y target\smart-study-app-1.0.0.jar "%APP_DIR%\app.jar"
 
           rem Kill any previous java process running our app (best-effort)
-          for /f "tokens=2" %%p in ('powershell -NoProfile -Command "Get-Process java -ErrorAction SilentlyContinue | Where-Object { $_.Path -like '*app.jar*' } | Select-Object -Expand Id"') do taskkill /PID %%p /F
+          for /f "tokens=2" %%p in ('powershell -NoProfile -Command "Get-Process java -ErrorAction SilentlyContinue | Where-Object { $_.Path -like ''*app.jar*'' } | Select-Object -Expand Id"') do taskkill /PID %%p /F
           timeout /t 2 >NUL
 
           rem Start new app in background (detached PowerShell)
-          start "SmartStudy" powershell -NoProfile -WindowStyle Hidden -Command ^
+          start "" powershell -NoProfile -WindowStyle Hidden -Command ^
             "java -jar %APP_DIR%\app.jar ^
               --server.port=8080 ^
               --lucene.index.directory=%APP_DIR%\lucene-index ^
@@ -58,7 +57,7 @@ pipeline {
               --gemini.api.url=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent ^
               --gemini.api.key=%GEMINI_API_KEY% ^
             > %APP_DIR%\smartstudy.out.log 2^>^&1"
-          """
+          '''
         }
       }
     }
