@@ -45,8 +45,8 @@ pipeline {
           copy /Y target\\smart-study-app-1.0.0.jar "%APP_DIR%\\app.jar"
 
           rem Kill any previous java process
-          wmic process where "commandline like '%%app.jar%%' and commandline like '%%8081%%'" delete 2>nul
-          timeout /t 2 /nobreak >nul 2>&1
+          for /f "tokens=2" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a 2>nul
+          ping 127.0.0.1 -n 3 > nul
           '''
           
           powershell '''
