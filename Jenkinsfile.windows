@@ -43,15 +43,21 @@ pipeline {
       ping 127.0.0.1 -n 3 > nul
       '''
       
-      bat '''
-      echo Starting new SmartStudy instance...
-      start "SmartStudy" /B /D "%APP_DIR%" javaw -jar app.jar
+      powershell '''
+      Write-Output "Starting SmartStudy as detached process..."
+      Start-Process -FilePath "javaw" -ArgumentList "-jar","app.jar" -WorkingDirectory "C:\\smartstudy" -WindowStyle Hidden
       
-      echo Waiting for app to start...
-      ping 127.0.0.1 -n 15 > nul
+      Write-Output "Waiting 15 seconds for app startup..."
+      Start-Sleep -Seconds 15
       
-      echo Checking if app is running...
-      netstat -ano | findstr :8081 | findstr LISTENING >nul && echo SUCCESS: App is listening on port 8081 || echo WARNING: App may not have started yet
+      $listening = netstat -ano | Select-String ":8081" | Select-String "LISTENING"
+      if ($listening) {
+        Write-Output "SUCCESS: App is listening on port 8081"
+        exit 0
+      } else {
+        Write-Output "WARNING: App may not have started yet"
+        exit 0
+      }
       '''
     }
   }
