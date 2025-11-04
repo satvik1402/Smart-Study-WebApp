@@ -39,25 +39,23 @@ pipeline {
       copy /Y target\\smart-study-app-1.0.0.jar "%APP_DIR%\\app.jar"
 
       echo Stopping any existing SmartStudy process...
-      for /f "tokens=2" %%a in ('netstat -ano ^| findstr :8081 ^| findstr LISTENING') do taskkill /F /PID %%a 2>nul
+      for /f "tokens=2" %%a in ('netstat -ano ^| findstr :9090 ^| findstr LISTENING') do taskkill /F /PID %%a 2>nul
       ping 127.0.0.1 -n 3 > nul
       '''
       
-      powershell '''
-      Write-Output "Starting SmartStudy as detached process..."
-      Start-Process -FilePath "javaw" -ArgumentList "-jar","app.jar" -WorkingDirectory "C:\\smartstudy" -WindowStyle Hidden
+      bat '''
+      echo Creating scheduled task to start SmartStudy...
+      schtasks /delete /tn "SmartStudyApp" /f 2>nul
+      schtasks /create /tn "SmartStudyApp" /tr "javaw -jar C:\\smartstudy\\app.jar" /sc once /st 00:00 /sd 01/01/2099 /rl highest /f
       
-      Write-Output "Waiting 15 seconds for app startup..."
-      Start-Sleep -Seconds 15
+      echo Starting SmartStudy via scheduled task (runs independently of Jenkins)...
+      schtasks /run /tn "SmartStudyApp"
       
-      $listening = netstat -ano | Select-String ":8081" | Select-String "LISTENING"
-      if ($listening) {
-        Write-Output "SUCCESS: App is listening on port 8081"
-        exit 0
-      } else {
-        Write-Output "WARNING: App may not have started yet"
-        exit 0
-      }
+      echo Waiting 15 seconds for app startup...
+      ping 127.0.0.1 -n 16 > nul
+      
+      echo Checking if app is running...
+      netstat -ano | findstr :9090 | findstr LISTENING >nul && echo SUCCESS: App is listening on port 9090 || echo WARNING: App may not have started yet
       '''
     }
   }
@@ -67,7 +65,7 @@ pipeline {
 
     stage('Smoke Test') {
       steps {
-        bat 'echo Deployment complete. App running at http://localhost:8081'
+        bat 'echo Deployment complete. App running at http://localhost:9090'
       }
     }
   }
