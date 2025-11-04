@@ -43,27 +43,15 @@ pipeline {
       ping 127.0.0.1 -n 3 > nul
       '''
       
-      powershell '''
-      Write-Output "Starting new SmartStudy instance as detached process..."
-      $psi = New-Object System.Diagnostics.ProcessStartInfo
-      $psi.FileName = "javaw"
-      $psi.Arguments = "-jar C:\\smartstudy\\app.jar"
-      $psi.WorkingDirectory = "C:\\smartstudy"
-      $psi.UseShellExecute = $false
-      $psi.CreateNoWindow = $true
-      [System.Diagnostics.Process]::Start($psi) | Out-Null
-      Write-Output "SmartStudy process started and detached"
+      bat '''
+      echo Starting new SmartStudy instance...
+      start "SmartStudy" /B /D "%APP_DIR%" javaw -jar app.jar
       
-      Write-Output "Waiting for app to start..."
-      Start-Sleep -Seconds 15
+      echo Waiting for app to start...
+      ping 127.0.0.1 -n 15 > nul
       
-      Write-Output "Checking if app is running..."
-      $listening = netstat -ano | Select-String ":8081" | Select-String "LISTENING"
-      if ($listening) {
-        Write-Output "SUCCESS: App is listening on port 8081"
-      } else {
-        Write-Output "WARNING: App may not have started yet"
-      }
+      echo Checking if app is running...
+      netstat -ano | findstr :8081 | findstr LISTENING >nul && echo SUCCESS: App is listening on port 8081 || echo WARNING: App may not have started yet
       '''
     }
   }
