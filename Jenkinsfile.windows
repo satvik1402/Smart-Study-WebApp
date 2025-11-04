@@ -42,14 +42,21 @@ pipeline {
       for /f "tokens=2" %%a in ('netstat -ano ^| findstr :8081 ^| findstr LISTENING') do taskkill /F /PID %%a 2>nul
       ping 127.0.0.1 -n 3 > nul
 
-      echo Creating startup script...
-      echo @echo off > "%APP_DIR%\\start-app.bat"
-      echo cd /d "%APP_DIR%" >> "%APP_DIR%\\start-app.bat"
-      echo start "SmartStudy" /B javaw -jar app.jar >> "%APP_DIR%\\start-app.bat"
-      echo echo SmartStudy started in background >> "%APP_DIR%\\start-app.bat"
-
-      echo Starting new SmartStudy instance in background...
-      call "%APP_DIR%\\start-app.bat"
+      echo Starting new SmartStudy instance as detached process...
+      '''
+      
+      powershell '''
+      $psi = New-Object System.Diagnostics.ProcessStartInfo
+      $psi.FileName = "javaw"
+      $psi.Arguments = "-jar C:\\smartstudy\\app.jar"
+      $psi.WorkingDirectory = "C:\\smartstudy"
+      $psi.UseShellExecute = $false
+      $psi.CreateNoWindow = $true
+      [System.Diagnostics.Process]::Start($psi) | Out-Null
+      Write-Output "SmartStudy process started and detached"
+      '''
+      
+      bat '''
 
       echo Waiting for app to start...
       ping 127.0.0.1 -n 15 > nul
