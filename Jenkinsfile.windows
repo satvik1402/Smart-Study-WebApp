@@ -44,11 +44,16 @@ pipeline {
       '''
       
       bat '''
+      echo Creating startup script...
+      echo @echo off > "%APP_DIR%\\start-app.bat"
+      echo cd /d "%APP_DIR%" >> "%APP_DIR%\\start-app.bat"
+      echo javaw -jar app.jar >> "%APP_DIR%\\start-app.bat"
+      
       echo Creating scheduled task to start SmartStudy...
       schtasks /delete /tn "SmartStudyApp" /f 2>nul
-      schtasks /create /tn "SmartStudyApp" /tr "javaw -jar C:\\smartstudy\\app.jar" /sc once /st 00:00 /sd 01/01/2099 /rl highest /f
+      schtasks /create /tn "SmartStudyApp" /tr "%APP_DIR%\\start-app.bat" /sc once /st 00:00 /ru SYSTEM /f
       
-      echo Starting SmartStudy via scheduled task (runs independently of Jenkins)...
+      echo Starting SmartStudy via scheduled task...
       schtasks /run /tn "SmartStudyApp"
       
       echo Waiting 15 seconds for app startup...
