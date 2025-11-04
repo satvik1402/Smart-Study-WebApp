@@ -54,7 +54,7 @@ pipeline {
           start /B javaw -jar "%APP_DIR%\\app.jar" --server.port=8081 --lucene.index.directory="%APP_DIR%\\lucene-index" --file.upload.directory="%APP_DIR%\\uploads" --file.temp.directory="%APP_DIR%\\temp" --spring.datasource.url="jdbc:mysql://localhost:3306/smartstudy?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true" --spring.datasource.username="%DB_USER%" --spring.datasource.password="%DB_PASS%" --gemini.api.url="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent" --gemini.api.key="%GEMINI_API_KEY%" > "%APP_DIR%\\smartstudy.out.log" 2>&1
           
           rem Wait for startup
-          ping 127.0.0.1 -n 12 > nul
+          ping 127.0.0.1 -n 25 > nul
           
           echo App started in background
           '''
