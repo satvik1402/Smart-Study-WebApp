@@ -45,14 +45,11 @@ pipeline {
       echo Creating startup script...
       echo @echo off > "%APP_DIR%\\start-app.bat"
       echo cd /d "%APP_DIR%" >> "%APP_DIR%\\start-app.bat"
-      echo java -jar app.jar ^>smartstudy.out.log 2^>^&1 >> "%APP_DIR%\\start-app.bat"
-      echo if errorlevel 1 ( >> "%APP_DIR%\\start-app.bat"
-      echo   echo App crashed! Check smartstudy.out.log ^>^> smartstudy.out.log >> "%APP_DIR%\\start-app.bat"
-      echo   pause >> "%APP_DIR%\\start-app.bat"
-      echo ) >> "%APP_DIR%\\start-app.bat"
+      echo start "SmartStudy" /B javaw -jar app.jar >> "%APP_DIR%\\start-app.bat"
+      echo echo SmartStudy started in background >> "%APP_DIR%\\start-app.bat"
 
       echo Starting new SmartStudy instance in background...
-      start "SmartStudyApp" /MIN cmd /k "%APP_DIR%\\start-app.bat"
+      call "%APP_DIR%\\start-app.bat"
 
       echo Waiting for app to start...
       ping 127.0.0.1 -n 15 > nul
